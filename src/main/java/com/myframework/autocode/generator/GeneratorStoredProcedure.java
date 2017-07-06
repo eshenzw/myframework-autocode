@@ -16,16 +16,17 @@ import com.myframework.autocode.util.CodeGeneratorUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 
-public class GeneratorStoredProcedureTest
+public class GeneratorStoredProcedure
 {
 
 	public static void main(String[] args) throws Exception
 	{
+		// TODO Auto-generated method stub
 		File xlsxFile = new File(System.getProperty("user.dir") + CodeGeneratorUtils.DB_DEFINE_FILE);
 		List<TableInfo> tableInfoList = CodeGeneratorUtils.readXlsx(xlsxFile);
 
 		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(GeneratorStoredProcedureTest.class, CodeGeneratorUtils.AUTOCODE_PATH);
+		cfg.setClassForTemplateLoading(GeneratorStoredProcedure.class, CodeGeneratorUtils.AUTOCODE_PATH);
 
 		String basePath = System.getProperty("user.dir") + CodeGeneratorUtils.OUTPUT_PATH;
 

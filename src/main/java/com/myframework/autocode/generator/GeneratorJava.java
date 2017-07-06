@@ -16,7 +16,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-public class GeneratorTest
+public class GeneratorJava
 {
 
 	public static void main(String[] args) throws IOException, TemplateException
@@ -36,7 +36,7 @@ public class GeneratorTest
 		//
 
 		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(GeneratorTest.class, CodeGeneratorUtils.AUTOCODE_PATH);
+		cfg.setClassForTemplateLoading(GeneratorJava.class, CodeGeneratorUtils.AUTOCODE_PATH);
 
 		String basePath = System.getProperty("user.dir") + CodeGeneratorUtils.OUTPUT_PATH;
 		// 清空basePath下的文件
