@@ -11,6 +11,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.myframework.autocode.config.Config;
+import com.myframework.autocode.config.DbTypeEnum;
 import com.mysql.jdbc.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -22,6 +23,21 @@ import com.myframework.autocode.entity.TableInfo;
 
 public class CodeGeneratorUtils
 {
+
+	public static List<TableInfo> parseTable() throws IOException {
+		if("1".equals(Config.GENERATE_TYPE)){
+			File xlsxFile = new File(System.getProperty("user.dir") + Config.DB_DEFINE_FILE);
+			List<TableInfo> tableInfoList = CodeGeneratorUtils.readXlsx(xlsxFile);
+			System.out.println(tableInfoList);
+			return tableInfoList;
+		}else if("2".equals(Config.GENERATE_TYPE)){
+			List<TableInfo> tableInfoList =CodeGeneratorUtils.readDb(Config.DB_TABLES.split(","),Config.DB_TYPE);
+			System.out.println(tableInfoList);
+			return tableInfoList;
+		}
+		return null;
+	}
+
 	/**
 	 * 读取xlsx配置文件用
 	 * <p>
@@ -95,64 +111,67 @@ public class CodeGeneratorUtils
 		return tableList;
 	}
 
-	public static List<TableInfo> readDb(String[] tableNames){
+	public static List<TableInfo> readDb(String[] tableNames,DbTypeEnum dbTypeEnum){
 		List<TableInfo> tableList = new ArrayList<TableInfo>();
-		for(int i=0;i<tableNames.length;i++){
-			Map table = DBHelper.queryOne("SELECT " +
-					" table_name tableName , " +
-					" ENGINE , " +
-					" table_comment tableComment , " +
-					" create_time createTime " +
-					"FROM " +
-					" information_schema. TABLES " +
-					"WHERE " +
-					" table_schema =(SELECT DATABASE()) " +
-					"AND table_name = ? ",tableNames[i]);
-			List<Map> columns = DBHelper.query(" " +
-					"SELECT " +
-					" column_name columnName , " +
-					" data_type dataType , " +
-					" column_comment columnComment , " +
-					" column_key columnKey , " +
-					" is_nullable columnNullable , " +
-					" column_type columnType , " +
-					" column_comment columnComment , " +
-					" extra " +
-					"FROM " +
-					" information_schema. COLUMNS " +
-					"WHERE " +
-					" table_name = ? " +
-					"AND table_schema =(SELECT DATABASE()) " +
-					"ORDER BY " +
-					" ordinal_position",tableNames[i]);
-			TableInfo tableInfo = new TableInfo();
-			String tableName = String.valueOf(table.get("tableName"));
-			tableInfo.setTableName(tableName.toUpperCase());
-			tableInfo.setDescription(String.valueOf(table.get("tableComment")));
-			tableInfo.setTableDbName(tableName);
-			String moduleName = tableName.replace(Config.DB_PREFIX, "")
-					.substring(0, tableName.indexOf("_"));
-			tableInfo.setModuleName(moduleName.toLowerCase());
+		if(DbTypeEnum.MYSQL == dbTypeEnum){
+			for(int i=0;i<tableNames.length;i++){
+				Map table = DBHelper.queryOne("SELECT " +
+						" table_name tableName , " +
+						" ENGINE , " +
+						" table_comment tableComment , " +
+						" create_time createTime " +
+						"FROM " +
+						" information_schema. TABLES " +
+						"WHERE " +
+						" table_schema =(SELECT DATABASE()) " +
+						"AND table_name = ? ",tableNames[i]);
+				List<Map> columns = DBHelper.query(" " +
+						"SELECT " +
+						" column_name columnName , " +
+						" data_type dataType , " +
+						" column_comment columnComment , " +
+						" column_key columnKey , " +
+						" is_nullable columnNullable , " +
+						" column_type columnType , " +
+						" column_comment columnComment , " +
+						" extra " +
+						"FROM " +
+						" information_schema. COLUMNS " +
+						"WHERE " +
+						" table_name = ? " +
+						"AND table_schema =(SELECT DATABASE()) " +
+						"ORDER BY " +
+						" ordinal_position",tableNames[i]);
+				TableInfo tableInfo = new TableInfo();
+				String tableName = String.valueOf(table.get("tableName"));
+				tableInfo.setTableName(tableName.toUpperCase());
+				tableInfo.setDescription(String.valueOf(table.get("tableComment")));
+				tableInfo.setTableDbName(tableName);
+				String moduleName = tableName.replace(Config.DB_PREFIX, "")
+						.substring(0, tableName.indexOf("_"));
+				tableInfo.setModuleName(moduleName.toLowerCase());
 
-			//
-			List<ColumnInfo> columnList = new ArrayList<ColumnInfo>();
-			for(Map col : columns){
-				ColumnInfo column = new ColumnInfo();
-				String columnName = String.valueOf(col.get("columnName"));
-				String columnKey = String.valueOf(col.get("columnKey"));
-				String columnComment = String.valueOf(col.get("columnComment"));
-				String columnType = String.valueOf(col.get("columnType"));
-				String columnNullable = String.valueOf(col.get("columnNullable")).toUpperCase();
+				//
+				List<ColumnInfo> columnList = new ArrayList<ColumnInfo>();
+				for(Map col : columns){
+					ColumnInfo column = new ColumnInfo();
+					String columnName = String.valueOf(col.get("columnName"));
+					String columnKey = String.valueOf(col.get("columnKey"));
+					String columnComment = String.valueOf(col.get("columnComment"));
+					String columnType = String.valueOf(col.get("columnType"));
+					String columnNullable = String.valueOf(col.get("columnNullable")).toUpperCase();
 
-				column.setName(columnName);
-				column.setKey(StringUtils.isNullOrEmpty(columnKey)?false:true);
-				column.setNotNull("NO".equals(columnNullable)?true:false);
-				column.setType(columnType);
-				column.setDescription(columnComment);
-				columnList.add(column);
+					column.setName(columnName);
+					column.setKey(StringUtils.isNullOrEmpty(columnKey)?false:true);
+					column.setNotNull("NO".equals(columnNullable)?true:false);
+					column.setType(columnType);
+					column.setDescription(StringUtils.isNullOrEmpty(columnComment)?columnName:columnComment);
+					column.setExample("example:");
+					columnList.add(column);
+				}
+				tableInfo.setColumns(columnList);
+				tableList.add(tableInfo);
 			}
-			tableInfo.setColumns(columnList);
-			tableList.add(tableInfo);
 		}
 		return tableList;
 	}
@@ -164,7 +183,7 @@ public class CodeGeneratorUtils
 		//List<TableInfo> list = CodeGeneratorUtils.readXlsx(file);
 		//System.out.println(list);
 		//
-		List<TableInfo> list2 = CodeGeneratorUtils.readDb(new String[]{"tmpl_tbl"});
+		List<TableInfo> list2 = CodeGeneratorUtils.readDb(new String[]{"tmpl_tbl"},DbTypeEnum.MYSQL);
 		System.out.println(list2);
 	}
 }

@@ -23,8 +23,7 @@ public class GeneratorJava
 
 	public static void main(String[] args) throws IOException, TemplateException
 	{
-		File xlsxFile = new File(System.getProperty("user.dir") + Config.DB_DEFINE_FILE);
-		List<TableInfo> tableInfoList = CodeGeneratorUtils.readXlsx(xlsxFile);
+		List<TableInfo> tableInfoList = CodeGeneratorUtils.parseTable();
 		List<ClassInfo> classInfoList = new ArrayList<ClassInfo>();
 		for (TableInfo tableInfo : tableInfoList)
 		{

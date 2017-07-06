@@ -23,8 +23,7 @@ public class GeneratorStoredProcedure
 	public static void main(String[] args) throws Exception
 	{
 		// TODO Auto-generated method stub
-		File xlsxFile = new File(System.getProperty("user.dir") + Config.DB_DEFINE_FILE);
-		List<TableInfo> tableInfoList = CodeGeneratorUtils.readXlsx(xlsxFile);
+		List<TableInfo> tableInfoList = CodeGeneratorUtils.parseTable();
 
 		Configuration cfg = new Configuration();
 		cfg.setClassForTemplateLoading(GeneratorStoredProcedure.class, Config.AUTOCODE_PATH);
