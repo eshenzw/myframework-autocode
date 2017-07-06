@@ -52,6 +52,15 @@ public class DBHelper {
         }
     }
 
+    public static Map queryOne(String sql, Object ...params){
+        List<Map> list = DBHelper.query(sql,params);
+        if(list !=null && list.size()>0){
+            return list.get(0);
+        }else{
+            return null;
+        }
+    }
+
     public static List<Map> query(String sql, Object ...params){
         int ret = 0;
         DBHelper hunDb = new DBHelper(sql);

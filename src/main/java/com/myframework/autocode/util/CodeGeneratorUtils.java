@@ -6,10 +6,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.myframework.autocode.config.Config;
+import com.mysql.jdbc.StringUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -93,11 +95,76 @@ public class CodeGeneratorUtils
 		return tableList;
 	}
 
+	public static List<TableInfo> readDb(String[] tableNames){
+		List<TableInfo> tableList = new ArrayList<TableInfo>();
+		for(int i=0;i<tableNames.length;i++){
+			Map table = DBHelper.queryOne("SELECT " +
+					" table_name tableName , " +
+					" ENGINE , " +
+					" table_comment tableComment , " +
+					" create_time createTime " +
+					"FROM " +
+					" information_schema. TABLES " +
+					"WHERE " +
+					" table_schema =(SELECT DATABASE()) " +
+					"AND table_name = ? ",tableNames[i]);
+			List<Map> columns = DBHelper.query(" " +
+					"SELECT " +
+					" column_name columnName , " +
+					" data_type dataType , " +
+					" column_comment columnComment , " +
+					" column_key columnKey , " +
+					" is_nullable columnNullable , " +
+					" column_type columnType , " +
+					" column_comment columnComment , " +
+					" extra " +
+					"FROM " +
+					" information_schema. COLUMNS " +
+					"WHERE " +
+					" table_name = ? " +
+					"AND table_schema =(SELECT DATABASE()) " +
+					"ORDER BY " +
+					" ordinal_position",tableNames[i]);
+			TableInfo tableInfo = new TableInfo();
+			String tableName = String.valueOf(table.get("tableName"));
+			tableInfo.setTableName(tableName.toUpperCase());
+			tableInfo.setDescription(String.valueOf(table.get("tableComment")));
+			tableInfo.setTableDbName(tableName);
+			String moduleName = tableName.replace(Config.DB_PREFIX, "")
+					.substring(0, tableName.indexOf("_"));
+			tableInfo.setModuleName(moduleName.toLowerCase());
+
+			//
+			List<ColumnInfo> columnList = new ArrayList<ColumnInfo>();
+			for(Map col : columns){
+				ColumnInfo column = new ColumnInfo();
+				String columnName = String.valueOf(col.get("columnName"));
+				String columnKey = String.valueOf(col.get("columnKey"));
+				String columnComment = String.valueOf(col.get("columnComment"));
+				String columnType = String.valueOf(col.get("columnType"));
+				String columnNullable = String.valueOf(col.get("columnNullable")).toUpperCase();
+
+				column.setName(columnName);
+				column.setKey(StringUtils.isNullOrEmpty(columnKey)?false:true);
+				column.setNotNull("NO".equals(columnNullable)?true:false);
+				column.setType(columnType);
+				column.setDescription(columnComment);
+				columnList.add(column);
+			}
+			tableInfo.setColumns(columnList);
+			tableList.add(tableInfo);
+		}
+		return tableList;
+	}
+
 	public static void main(String[] args) throws IOException
 	{
 		String separator = File.separator;
-		File file = new File(System.getProperty("user.dir") + Config.DB_DEFINE_FILE.replaceAll("/", File.separator));
-		List<TableInfo> list = CodeGeneratorUtils.readXlsx(file);
-		System.out.println(list);
+		//File file = new File(System.getProperty("user.dir") + Config.DB_DEFINE_FILE.replaceAll("/", File.separator));
+		//List<TableInfo> list = CodeGeneratorUtils.readXlsx(file);
+		//System.out.println(list);
+		//
+		List<TableInfo> list2 = CodeGeneratorUtils.readDb(new String[]{"tmpl_tbl"});
+		System.out.println(list2);
 	}
 }
