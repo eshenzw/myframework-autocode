@@ -13,4 +13,11 @@ public class Config {
     public final static String OUTPUT_PATH = "/out/AutoCodeGenerate/".replaceAll("/",File.separator);
     public final static String OUTPUT_PACKAGE = "com.zw";
     public final static String DB_PREFIX = "pt_";
+    /**
+     * 数据库配置
+     */
+    public static final String DB_URL = "jdbc:mysql://sunbiyun.com:3306/autocode?useUnicode=true&characterEncoding=utf8";
+    public static final String DB_NAME = "com.mysql.jdbc.Driver";
+    public static final String DB_USER = "zhaowei";
+    public static final String DB_PASSWORD = "zw900730";
 }

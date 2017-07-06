@@ -23,6 +23,11 @@ public class TableInfo {
     private String tableDbName;
 
     /*
+	 * 描述
+	 */
+    private String description;
+
+    /*
      * 数据表列
      */
     private List<ColumnInfo> columns;
@@ -65,4 +70,11 @@ public class TableInfo {
         this.columns = columns;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }
