@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.myframework.autocode.config.Config;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -19,27 +20,6 @@ import com.myframework.autocode.entity.TableInfo;
 
 public class CodeGeneratorUtils
 {
-	public enum DB_TYPE_ENUM{
-		MYSQL(1),
-		SQLSERVER(2),
-		ORACLE(3),
-		POSTGRESQL(3);
-
-		private int value;
-		DB_TYPE_ENUM(int v) {
-			this.value = v;
-		}
-	}
-
-	public final static String DAO_TYPE = "2";  //1:原生javaDao  2:接口型dao，mybatis实例化
-	public final static DB_TYPE_ENUM DB_TYPE = DB_TYPE_ENUM.MYSQL;  //1:mysql  2:oracle
-	public final static String DB_DEFINE_FILE = "/doc/数据表设计.xlsx".replaceAll("/",File.separator);
-	public final static String AUTOCODE_PATH = "../template";
-	public final static String OUTPUT_PATH = "/out/AutoCodeGenerate/".replaceAll("/",File.separator);
-	public final static String OUTPUT_PACKAGE = "com.zw";
-	public final static String DB_PREFIX = "pt_";
-
-
 	/**
 	 * 读取xlsx配置文件用
 	 * <p>
@@ -60,12 +40,16 @@ public class CodeGeneratorUtils
 			{
 				TableInfo tableInfo = new TableInfo();
 				tableInfo.setTableName(matcher.group(1).trim()); // 第一部分是表名称
-				tableInfo.setTableDbName(matcher.group(2).replace(DB_PREFIX,"").trim()); // 第二部分是数据库内的表名称
-				if(matcher.group(2).replace(DB_PREFIX,"").contains("_")){
-					String moduleName = matcher.group(2).replace(DB_PREFIX,"").substring(0,matcher.group(2).indexOf("_"));
+				tableInfo.setTableDbName(matcher.group(2).replace(Config.DB_PREFIX, "").trim()); // 第二部分是数据库内的表名称
+				if (matcher.group(2).replace(Config.DB_PREFIX, "").contains("_"))
+				{
+					String moduleName = matcher.group(2).replace(Config.DB_PREFIX, "")
+							.substring(0, matcher.group(2).indexOf("_"));
 					tableInfo.setModuleName(moduleName.toLowerCase());
-				}else{
-					tableInfo.setModuleName(matcher.group(2).replace(DB_PREFIX,"").toLowerCase());
+				}
+				else
+				{
+					tableInfo.setModuleName(matcher.group(2).replace(Config.DB_PREFIX, "").toLowerCase());
 				}
 				List<ColumnInfo> columnList = new ArrayList<ColumnInfo>();
 				for (int j = 1; j <= sheet.getLastRowNum(); j++)
@@ -112,7 +96,7 @@ public class CodeGeneratorUtils
 	public static void main(String[] args) throws IOException
 	{
 		String separator = File.separator;
-		File file = new File(System.getProperty("user.dir") + CodeGeneratorUtils.DB_DEFINE_FILE.replaceAll("/",File.separator));
+		File file = new File(System.getProperty("user.dir") + Config.DB_DEFINE_FILE.replaceAll("/", File.separator));
 		List<TableInfo> list = CodeGeneratorUtils.readXlsx(file);
 		System.out.println(list);
 	}

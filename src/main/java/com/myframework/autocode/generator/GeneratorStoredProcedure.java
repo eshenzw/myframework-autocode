@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.myframework.autocode.config.Config;
 import com.myframework.autocode.entity.ColumnInfo;
 import com.myframework.autocode.entity.TableInfo;
 import com.myframework.autocode.util.CodeGeneratorUtils;
@@ -22,13 +23,13 @@ public class GeneratorStoredProcedure
 	public static void main(String[] args) throws Exception
 	{
 		// TODO Auto-generated method stub
-		File xlsxFile = new File(System.getProperty("user.dir") + CodeGeneratorUtils.DB_DEFINE_FILE);
+		File xlsxFile = new File(System.getProperty("user.dir") + Config.DB_DEFINE_FILE);
 		List<TableInfo> tableInfoList = CodeGeneratorUtils.readXlsx(xlsxFile);
 
 		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(GeneratorStoredProcedure.class, CodeGeneratorUtils.AUTOCODE_PATH);
+		cfg.setClassForTemplateLoading(GeneratorStoredProcedure.class, Config.AUTOCODE_PATH);
 
-		String basePath = System.getProperty("user.dir") + CodeGeneratorUtils.OUTPUT_PATH;
+		String basePath = System.getProperty("user.dir") + Config.OUTPUT_PATH;
 
 		Map<String, Object> dataMap = new HashMap<String, Object>();
 		List<Map<String, Object>> pros = new ArrayList<Map<String, Object>>();
@@ -38,7 +39,7 @@ public class GeneratorStoredProcedure
 			proMap.put("tableName", tableInfo.getTableName());
 			proMap.put("tableDbName", tableInfo.getTableDbName());
 			proMap.put("tableDbNameLc", tableInfo.getTableDbName().toLowerCase());
-			proMap.put("prefixTableDbName", CodeGeneratorUtils.DB_PREFIX + tableInfo.getTableDbName());
+			proMap.put("prefixTableDbName", Config.DB_PREFIX + tableInfo.getTableDbName());
 
 			List<Map<String, Object>> columnPros = new ArrayList<Map<String, Object>>();
 			List<ColumnInfo> columnInfoList = tableInfo.getColumns();

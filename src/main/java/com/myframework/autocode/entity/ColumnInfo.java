@@ -1,5 +1,6 @@
 package com.myframework.autocode.entity;
 
+import com.myframework.autocode.config.DbTypeEnum;
 import com.myframework.autocode.util.CodeGeneratorUtils;
 
 import java.util.regex.Matcher;
@@ -54,10 +55,10 @@ public class ColumnInfo
 		return "ColumnInfo [name=" + name + ", type=" + type + ", description=" + description + "]";
 	}
 
-	public String getDbColumnType(CodeGeneratorUtils.DB_TYPE_ENUM dbtype)
+	public String getDbColumnType(DbTypeEnum dbtype)
 	{
 		String colType = "";
-		if (dbtype == CodeGeneratorUtils.DB_TYPE_ENUM.MYSQL)
+		if (dbtype == DbTypeEnum.MYSQL)
 		{
 			Matcher matcher = pattern.matcher(this.type);
 			if (matcher.matches())
@@ -71,7 +72,7 @@ public class ColumnInfo
 				colType += dbTypeLength == null ? "" : ("(" + dbTypeLength + ")");
 			}
 		}
-		else if (dbtype == CodeGeneratorUtils.DB_TYPE_ENUM.SQLSERVER)
+		else if (dbtype == DbTypeEnum.SQLSERVER)
 		{
 			Matcher matcher = pattern.matcher(this.type);
 			if (matcher.matches())
@@ -96,7 +97,7 @@ public class ColumnInfo
 				colType += dbTypeLength == null ? "" : ("(" + dbTypeLength + ")");
 			}
 		}
-		else if (dbtype == CodeGeneratorUtils.DB_TYPE_ENUM.ORACLE)
+		else if (dbtype == DbTypeEnum.ORACLE)
 		{
 			Matcher matcher = pattern.matcher(this.type);
 			if (matcher.matches())

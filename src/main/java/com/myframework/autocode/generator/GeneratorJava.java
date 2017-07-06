@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.myframework.autocode.config.Config;
+import com.myframework.autocode.config.DbTypeEnum;
 import com.myframework.autocode.entity.ClassInfo;
 import com.myframework.autocode.entity.ColumnInfo;
 import com.myframework.autocode.entity.PropertyInfo;
@@ -21,7 +23,7 @@ public class GeneratorJava
 
 	public static void main(String[] args) throws IOException, TemplateException
 	{
-		File xlsxFile = new File(System.getProperty("user.dir") + CodeGeneratorUtils.DB_DEFINE_FILE);
+		File xlsxFile = new File(System.getProperty("user.dir") + Config.DB_DEFINE_FILE);
 		List<TableInfo> tableInfoList = CodeGeneratorUtils.readXlsx(xlsxFile);
 		List<ClassInfo> classInfoList = new ArrayList<ClassInfo>();
 		for (TableInfo tableInfo : tableInfoList)
@@ -36,9 +38,9 @@ public class GeneratorJava
 		//
 
 		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(GeneratorJava.class, CodeGeneratorUtils.AUTOCODE_PATH);
+		cfg.setClassForTemplateLoading(GeneratorJava.class, Config.AUTOCODE_PATH);
 
-		String basePath = System.getProperty("user.dir") + CodeGeneratorUtils.OUTPUT_PATH;
+		String basePath = System.getProperty("user.dir") + Config.OUTPUT_PATH;
 		// 清空basePath下的文件
 		clearBasePathFiles(basePath);
 
@@ -52,9 +54,9 @@ public class GeneratorJava
 			dataMap.put("tableName", tableInfo.getTableName());
 			dataMap.put("tableDbName", tableInfo.getTableDbName());
 			dataMap.put("tableDbNameLc", tableInfo.getTableDbName().toLowerCase());
-			dataMap.put("prefixTableDbName", CodeGeneratorUtils.DB_PREFIX + tableInfo.getTableDbName());
+			dataMap.put("prefixTableDbName", Config.DB_PREFIX + tableInfo.getTableDbName());
 			//
-			dataMap.put("classPackage", CodeGeneratorUtils.OUTPUT_PACKAGE + "."
+			dataMap.put("classPackage", Config.OUTPUT_PACKAGE + "."
 					+ tableInfo.getModuleName());
 			dataMap.put("className", classInfo.getClassName());
 			dataMap.put("classNameWithoutEntity", classInfo.getClassNameWithoutEntity());
@@ -73,8 +75,8 @@ public class GeneratorJava
 				proMap.put("proDescription", columnInfo.getDescription());
 				proMap.put("proColumnName", columnInfo.getName());
 				proMap.put("proColumnNameLc", columnInfo.getName().toLowerCase());
-				proMap.put("proDbColumnType", columnInfo.getDbColumnType(CodeGeneratorUtils.DB_TYPE.MYSQL));
-				proMap.put("proDbColumnOracleType", columnInfo.getDbColumnType(CodeGeneratorUtils.DB_TYPE.ORACLE));
+				proMap.put("proDbColumnType", columnInfo.getDbColumnType(Config.DB_TYPE.MYSQL));
+				proMap.put("proDbColumnOracleType", columnInfo.getDbColumnType(Config.DB_TYPE.ORACLE));
 				proMap.put("proNotNull", columnInfo.isNotNull());
 				proMap.put("proType", propertyInfo.getPropertyType());
 				proMap.put("proName", propertyInfo.getPropertyName());
@@ -95,9 +97,9 @@ public class GeneratorJava
 			writer.close();
 			System.out.println("导出成功：" + pathFile.getAbsolutePath());
 
-			if(CodeGeneratorUtils.DAO_TYPE == "1"){
+			if(Config.DAO_TYPE == "1"){
 
-				if(CodeGeneratorUtils.DB_TYPE == CodeGeneratorUtils.DB_TYPE_ENUM.MYSQL){
+				if(Config.DB_TYPE == DbTypeEnum.MYSQL){
 					// Mapper生成
 					pathFile = new File(basePath + tableInfo.getModuleName() +"/mapper/" + classInfo.getClassNameWithoutEntity() + "Mapper.xml");
 					pathFile.getParentFile().mkdirs();
@@ -109,7 +111,7 @@ public class GeneratorJava
 					fos.close();
 					writer.close();
 					System.out.println("导出成功：" + pathFile.getAbsolutePath());
-				}else if(CodeGeneratorUtils.DB_TYPE == CodeGeneratorUtils.DB_TYPE_ENUM.ORACLE){
+				}else if(Config.DB_TYPE == DbTypeEnum.ORACLE){
 					// OracleMapper生成
 					pathFile = new File(basePath + tableInfo.getModuleName() +"/mapper/oracle/" + classInfo.getClassNameWithoutEntity() + "Mapper.xml");
 					pathFile.getParentFile().mkdirs();
@@ -146,9 +148,9 @@ public class GeneratorJava
 				fos.close();
 				writer.close();
 				System.out.println("导出成功：" + pathFile.getAbsolutePath());
-			}else if(CodeGeneratorUtils.DAO_TYPE == "2"){
+			}else if(Config.DAO_TYPE == "2"){
 				//
-				if(CodeGeneratorUtils.DB_TYPE == CodeGeneratorUtils.DB_TYPE_ENUM.MYSQL){
+				if(Config.DB_TYPE == DbTypeEnum.MYSQL){
 					// Mapper生成
 					pathFile = new File(basePath + tableInfo.getModuleName() +"/mapper/" + classInfo.getClassNameWithoutEntity() + "Mapper.xml");
 					pathFile.getParentFile().mkdirs();
@@ -160,7 +162,7 @@ public class GeneratorJava
 					fos.close();
 					writer.close();
 					System.out.println("导出成功：" + pathFile.getAbsolutePath());
-				}else if(CodeGeneratorUtils.DB_TYPE == CodeGeneratorUtils.DB_TYPE_ENUM.ORACLE){
+				}else if(Config.DB_TYPE == DbTypeEnum.ORACLE){
 					// OracleMapper生成
 					pathFile = new File(basePath + tableInfo.getModuleName() +"/mapper/oracle/" + classInfo.getClassNameWithoutEntity() + "Mapper.xml");
 					pathFile.getParentFile().mkdirs();
