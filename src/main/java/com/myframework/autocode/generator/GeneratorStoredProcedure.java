@@ -25,9 +25,6 @@ public class GeneratorStoredProcedure
 		// TODO Auto-generated method stub
 		List<TableInfo> tableInfoList = CodeGeneratorUtils.parseTable();
 
-		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(GeneratorStoredProcedure.class, Config.AUTOCODE_PATH);
-
 		String basePath = System.getProperty("user.dir") + Config.OUTPUT_PATH;
 
 		Map<String, Object> dataMap = new HashMap<String, Object>();
@@ -57,15 +54,7 @@ public class GeneratorStoredProcedure
 		dataMap.put("properties", pros);
 
 		File pathFile = new File(basePath + "StoredProcedure.txt");
-		pathFile.getParentFile().mkdirs();
-		FileOutputStream fos = new FileOutputStream(pathFile);
-		Writer writer = new OutputStreamWriter(fos, "UTF-8");
-		Template t = cfg.getTemplate("StoredProcedureGeneratorTemplate");
-		t.process(dataMap, writer);
-		fos.flush();
-		fos.close();
-		writer.close();
-
+		CodeGeneratorUtils.outFile(pathFile,"StoredProcedureGeneratorTemplate",dataMap);
 		System.out.println("导出成功：" + pathFile.getAbsolutePath());
 	}
 

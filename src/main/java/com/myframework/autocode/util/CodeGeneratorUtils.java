@@ -1,9 +1,6 @@
 package com.myframework.autocode.util;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,7 +9,11 @@ import java.util.regex.Pattern;
 
 import com.myframework.autocode.config.Config;
 import com.myframework.autocode.config.DbTypeEnum;
+import com.myframework.autocode.generator.GeneratorCreateSql;
 import com.mysql.jdbc.StringUtils;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -36,6 +37,20 @@ public class CodeGeneratorUtils
 			return tableInfoList;
 		}
 		return null;
+	}
+
+	public static void outFile(File file,String template,Map dataMap) throws IOException, TemplateException {
+		Configuration cfg = new Configuration();
+		cfg.setClassForTemplateLoading(GeneratorCreateSql.class, Config.AUTOCODE_PATH);
+		file.getParentFile().mkdirs();
+		FileOutputStream fos = new FileOutputStream(file);
+		Writer writer = new OutputStreamWriter(fos, "UTF-8");
+		Template t = cfg.getTemplate(template);
+		t.process(dataMap, writer);
+		fos.flush();
+		fos.close();
+		writer.close();
+		System.out.println("导出成功：" + file.getAbsolutePath());
 	}
 
 	/**

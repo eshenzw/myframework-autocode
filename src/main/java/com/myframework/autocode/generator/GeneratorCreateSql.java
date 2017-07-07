@@ -6,11 +6,9 @@ import com.myframework.autocode.entity.TableInfo;
 import com.myframework.autocode.util.CodeGeneratorUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,14 +16,9 @@ import java.util.Map;
 
 public class GeneratorCreateSql
 {
-
 	public static void main(String[] args) throws Exception
 	{
 		List<TableInfo> tableInfoList = CodeGeneratorUtils.parseTable();
-
-		Configuration cfg = new Configuration();
-		cfg.setClassForTemplateLoading(GeneratorCreateSql.class, Config.AUTOCODE_PATH);
-
 		String basePath = System.getProperty("user.dir") + Config.OUTPUT_PATH;
 
 		Map<String, Object> dataMap = new HashMap<String, Object>();
@@ -56,16 +49,7 @@ public class GeneratorCreateSql
 		dataMap.put("properties", pros);
 
 		File pathFile = new File(basePath + "CreateSql.sql");
-		pathFile.getParentFile().mkdirs();
-		FileOutputStream fos = new FileOutputStream(pathFile);
-		Writer writer = new OutputStreamWriter(fos, "UTF-8");
-		Template t = cfg.getTemplate("CreateSqlGeneratorTemplate");
-		t.process(dataMap, writer);
-		fos.flush();
-		fos.close();
-		writer.close();
-
-		System.out.println("导出成功：" + pathFile.getAbsolutePath());
+		CodeGeneratorUtils.outFile(pathFile,"CreateSqlGeneratorTemplate",dataMap);
 	}
 
 }
