@@ -1,5 +1,7 @@
 package com.myframework.autocode.entity;
 
+import com.myframework.autocode.util.DbType2Java;
+
 /**
  * 类属性信息
  */
@@ -75,67 +77,7 @@ public class PropertyInfo
 	 */
 	private String convertColumnType(String columnType, int length)
 	{
-		String propertyType = "";
-		if (columnType.toLowerCase().contains("tinyint"))
-		{
-			propertyType = "int";
-		}
-		else if (columnType.toLowerCase().contains("smallint"))
-		{
-			propertyType = "int";
-		}
-		else if (columnType.toLowerCase().contains("mediumint"))
-		{
-			propertyType = "int";
-		}
-		else if (columnType.toLowerCase().contains("bigint"))
-		{
-			propertyType = "Long";
-		}
-		else if (columnType.toLowerCase().contains("int"))
-		{
-			if(length<=11){
-				propertyType = "int";
-			}else{
-				propertyType = "Long";
-			}
-		}
-		else if (columnType.toLowerCase().contains("float"))
-		{
-			propertyType = "Float";
-		}
-		else if (columnType.toLowerCase().contains("decimal"))
-		{
-			propertyType = "BigDecimal";
-		}
-		else if (columnType.toLowerCase().contains("char"))
-		{
-			propertyType = "String";
-		}
-		else if (columnType.toLowerCase().contains("varchar"))
-		{
-			propertyType = "String";
-		}
-		else if (columnType.toLowerCase().contains("text"))
-		{
-			propertyType = "String";
-		}
-		else if (columnType.toLowerCase().contains("date"))
-		{
-			propertyType = "Date";
-		}
-		else if (columnType.toLowerCase().contains("timestamp"))
-		{
-			propertyType = "Date";
-		}
-		else if (columnType.toLowerCase().contains("time"))
-		{
-			propertyType = "Date";
-		}
-		else
-		{
-			propertyType = "Object";
-		}
+		String propertyType = DbType2Java.parseSqlType(columnType);
 		return propertyType;
 	}
 

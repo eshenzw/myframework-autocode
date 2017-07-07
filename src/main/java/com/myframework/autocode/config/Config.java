@@ -23,6 +23,12 @@ public class Config {
     public static final String DB_PASSWORD = "zw900730";
     public static final String DB_TABLES = "tmpl_tbl";
 
+    /*public static final String DB_URL = "jdbc:postgresql://172.31.3.206:5432/u8958085892090750662?useUnicode=true&characterEncoding=utf8";
+    public static final String DB_NAME = "org.postgresql.Driver";
+    public static final String DB_USER = "iorder_master";
+    public static final String DB_PASSWORD = "FHuma025";
+    public static final String DB_TABLES = "tmpl_tbl";*/
+
     /**
      * 生产文件配置
      */

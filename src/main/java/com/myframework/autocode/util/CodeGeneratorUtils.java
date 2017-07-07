@@ -172,6 +172,77 @@ public class CodeGeneratorUtils
 				tableInfo.setColumns(columnList);
 				tableList.add(tableInfo);
 			}
+		}else if(DbTypeEnum.POSTGRESQL == dbTypeEnum){
+			for(int i=0;i<tableNames.length;i++){
+				Map table = DBHelper.queryOne("SELECT " +
+						" schemaname AS schemaName, " +
+						" tablename AS tableName, " +
+						" obj_description(relfilenode, 'pg_class') AS tableComment " +
+						"FROM " +
+						" pg_tables A, " +
+						" pg_class b " +
+						"WHERE " +
+						" A .tablename = b.relname " +
+						"AND tablename NOT LIKE 'pg%' " +
+						"AND tablename NOT LIKE 'sql_%' " +
+						"AND tablename = ? " +
+						"ORDER BY " +
+						" tablename;",tableNames[i]);
+				List<Map> columns = DBHelper.query("SELECT " +
+						" A .attname AS columnName, " +
+						" format_type(A .atttypid, A .atttypmod) AS columnType, " +
+						" A .attnotnull AS columnNotNull, " +
+						" col_description(A .attrelid, A .attnum) AS columnComment, " +
+						" ( " +
+						"  SELECT " +
+						"   pg_constraint.conname AS pk_name " +
+						"  FROM " +
+						"   pg_constraint " +
+						"  INNER JOIN pg_class ON pg_constraint.conrelid = pg_class.oid " +
+						"  INNER JOIN pg_attribute ON pg_attribute.attrelid = pg_class.oid " +
+						"  AND pg_attribute.attnum = pg_constraint.conkey [ 1 ] " +
+						"  WHERE " +
+						"   pg_class.relname = C .relname " +
+						"  AND pg_constraint.contype = 'p' " +
+						"  AND pg_attribute.attname = A .attname " +
+						" ) AS columnKey " +
+						"FROM " +
+						" pg_class AS C, " +
+						" pg_attribute AS A " +
+						"WHERE " +
+						" C .relname = ? " +
+						"AND A .attrelid = C .oid " +
+						"AND A .attnum > 0",tableNames[i]);
+				TableInfo tableInfo = new TableInfo();
+				String tableName = String.valueOf(table.get("tablename"));
+				tableInfo.setTableName(tableName.toUpperCase());
+				tableInfo.setDescription(String.valueOf(table.get("tablecomment")));
+				tableInfo.setTableDbName(tableName);
+				String moduleName = tableName.replace(Config.DB_PREFIX, "")
+						.substring(0, tableName.indexOf("_"));
+				tableInfo.setModuleName(moduleName.toLowerCase());
+
+				//
+				List<ColumnInfo> columnList = new ArrayList<ColumnInfo>();
+				for(Map col : columns){
+					ColumnInfo column = new ColumnInfo();
+					String columnName = String.valueOf(col.get("columnname"));
+					String columnKey = String.valueOf(col.get("columnkey"));
+					String columnComment = String.valueOf(col.get("columncomment"));
+					String columnType = String.valueOf(col.get("columntype"));
+					String columnNotNull = String.valueOf(col.get("columnnotnull")).toUpperCase();
+
+					column.setName(columnName);
+					column.setKey(StringUtils.isNullOrEmpty(columnKey)?false:true);
+					column.setNotNull("t".equals(columnNotNull)?true:false);
+					column.setType(columnType);
+					column.setDescription(StringUtils.isNullOrEmpty(columnComment)?columnName:columnComment);
+					column.setExample("example:");
+					columnList.add(column);
+				}
+				tableInfo.setColumns(columnList);
+				tableList.add(tableInfo);
+			}
 		}
 		return tableList;
 	}
@@ -183,7 +254,7 @@ public class CodeGeneratorUtils
 		//List<TableInfo> list = CodeGeneratorUtils.readXlsx(file);
 		//System.out.println(list);
 		//
-		List<TableInfo> list2 = CodeGeneratorUtils.readDb(new String[]{"tmpl_tbl"},DbTypeEnum.MYSQL);
+		List<TableInfo> list2 = CodeGeneratorUtils.readDb(new String[]{"stdom_order"},DbTypeEnum.POSTGRESQL);
 		System.out.println(list2);
 	}
 }

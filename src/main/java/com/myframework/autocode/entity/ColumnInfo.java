@@ -58,69 +58,16 @@ public class ColumnInfo
 	public String getDbColumnType(DbTypeEnum dbtype)
 	{
 		String colType = "";
-		if (dbtype == DbTypeEnum.MYSQL)
+		Matcher matcher = pattern.matcher(this.type);
+		if (matcher.matches())
 		{
-			Matcher matcher = pattern.matcher(this.type);
-			if (matcher.matches())
-			{
-				String dbTypeName = matcher.group(1);
-				String dbTypeLength = matcher.group(3);
-				colType = dbTypeName.toUpperCase();
-				if((dbTypeLength == null || "".equals(dbTypeLength.trim())) && this.getLength() > 0){
-					dbTypeLength = String.valueOf(this.getLength());
-				}
-				colType += dbTypeLength == null ? "" : ("(" + dbTypeLength + ")");
+			String dbTypeName = matcher.group(1);
+			String dbTypeLength = matcher.group(3);
+			colType = dbTypeName.toUpperCase();
+			if((dbTypeLength == null || "".equals(dbTypeLength.trim())) && this.getLength() > 0){
+				dbTypeLength = String.valueOf(this.getLength());
 			}
-		}
-		else if (dbtype == DbTypeEnum.SQLSERVER)
-		{
-			Matcher matcher = pattern.matcher(this.type);
-			if (matcher.matches())
-			{
-				String dbTypeName = matcher.group(1);
-				String dbTypeLength = matcher.group(3);
-				if ("VARCHAR2".equalsIgnoreCase(dbTypeName) || "VARCHAR".equalsIgnoreCase(dbTypeName))
-				{
-					colType = "VARCHAR";
-				}
-				else if ("NUMBER".equalsIgnoreCase(dbTypeName))
-				{
-					colType = "NUMERIC";
-				}
-				else if ("CHAR".equalsIgnoreCase(dbTypeName))
-				{
-					colType = "CHAR";
-				}
-				if((dbTypeLength == null || "".equals(dbTypeLength.trim())) && this.getLength() > 0){
-					dbTypeLength = String.valueOf(this.getLength());
-				}
-				colType += dbTypeLength == null ? "" : ("(" + dbTypeLength + ")");
-			}
-		}
-		else if (dbtype == DbTypeEnum.ORACLE)
-		{
-			Matcher matcher = pattern.matcher(this.type);
-			if (matcher.matches())
-			{
-				String dbTypeName = matcher.group(1);
-				String dbTypeLength = matcher.group(3);
-				if ("VARCHAR2".equalsIgnoreCase(dbTypeName) || "VARCHAR".equalsIgnoreCase(dbTypeName))
-				{
-					colType = "VARCHAR2";
-				}
-				else if ("NUMBER".equalsIgnoreCase(dbTypeName))
-				{
-					colType = "NUMBER";
-				}
-				else if ("CHAR".equalsIgnoreCase(dbTypeName))
-				{
-					colType = "CHAR";
-				}
-				if((dbTypeLength == null || "".equals(dbTypeLength.trim())) && this.getLength() > 0){
-					dbTypeLength = String.valueOf(this.getLength());
-				}
-				colType += dbTypeLength == null ? "" : ("(" + dbTypeLength + ")");
-			}
+			colType += dbTypeLength == null ? "" : ("(" + dbTypeLength + ")");
 		}
 		return colType;
 	}
