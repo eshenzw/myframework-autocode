@@ -29,7 +29,10 @@ public class Config {
     public final static String AUTOCODE_PATH = "../template";
     public final static String OUTPUT_PATH = "/out/AutoCodeGenerate/".replaceAll("/",File.separator);
     public final static String OUTPUT_PACKAGE = "com.zw";
-    public final static String DB_PREFIX = "pt_";*/
+    public final static String MODULE_NAME = "test";
+    public final static String DB_PREFIX = "pt_";
+    public final static String DAO_SUFFIX = "Dao";
+    public final static String CLASS_SUFFIX = "Entity";*/
 
 
     /**
@@ -46,7 +49,10 @@ public class Config {
     public final static String AUTOCODE_PATH = "../template";
     public final static String OUTPUT_PATH = "/out/AutoCodeGenerate/".replaceAll("/",File.separator);
     public final static String OUTPUT_PACKAGE = "com.zw";
+    public final static String MODULE_NAME = "test";
     public final static String DB_PREFIX = "";
+    public final static String DAO_SUFFIX = "Mapper";
+    public final static String CLASS_SUFFIX = "";
 
 
 }

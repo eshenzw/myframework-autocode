@@ -1,7 +1,8 @@
-package ${classPackage}.entity;
+package ${classPackage}.pojo;
 
 import java.io.Serializable;
-<#assign basePros = ["id","status","createId","createTime","updateId","updateTime"]>
+import com.fh.iasp.platform.core.pojo.BasePojo;
+<#assign basePros = ["id","status","creatorId","createTime","modifyierId","modifyTime"]>
 <#assign hasImportDate=0 />
 <#assign hasImportBigDecimal=0 />
 <#list properties as pro>
@@ -15,20 +16,10 @@ import java.math.BigDecimal;
 </#if>
 </#list>
 
-<#if classNameWithoutEntity == "User">
-import com.myframework.entity.BaseUserEntity;
-<#else>
-import com.myframework.entity.BaseEntity;
-</#if>
-
 /**
- * Created by MyFrameWork.AutoCode on ${.now?date}
+ * Created by zhaowei on ${.now?date}
  */
-<#if classNameWithoutEntity == "User">
-public class ${className} extends BaseUserEntity {
-<#else>
-public class ${className} extends BaseEntity {
-</#if>
+public class ${className} extends BasePojo {
 
 <#list properties as pro>
 <#if !(basePros?seq_contains(pro.proName))>

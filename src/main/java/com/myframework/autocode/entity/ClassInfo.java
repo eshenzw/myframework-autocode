@@ -1,5 +1,7 @@
 package com.myframework.autocode.entity;
 
+import com.myframework.autocode.config.Config;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,7 @@ public class ClassInfo {
     
     public ClassInfo(TableInfo tableInfo) {
         // 转换数据表名格式到JAVA类名格式，再加上"Entity"
-        this.className = convertTableDbName(tableInfo.getTableDbName()) + "Entity";
+        this.className = convertTableDbName(tableInfo.getTableDbName()) + Config.CLASS_SUFFIX;
         this.properties = new ArrayList<PropertyInfo>();
         for (ColumnInfo columnInfo : tableInfo.getColumns()) {
             PropertyInfo propertyInfo = new PropertyInfo(columnInfo);
@@ -33,7 +35,7 @@ public class ClassInfo {
     }
     
     public String getClassNameWithoutEntity() {
-        return className.replace("Entity", "");
+        return className.replace(Config.CLASS_SUFFIX, "");
     }
     
     public String getClassObjectName() {
@@ -43,11 +45,11 @@ public class ClassInfo {
     }
     
     public String getDaoName() {
-        return getClassNameWithoutEntity() + "Dao";
+        return getClassNameWithoutEntity() + Config.DAO_SUFFIX;
     }
 
     public String getIDaoName() {
-        return "I" + getClassNameWithoutEntity() + "Dao";
+        return "I" + getClassNameWithoutEntity() + Config.DAO_SUFFIX;
     }
     
     @Override

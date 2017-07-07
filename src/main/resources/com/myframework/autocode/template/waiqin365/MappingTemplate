@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<!-- Created by MyFrameWork.AutoCode on ${.now?date} -->
+<!-- Created by zhaowei on ${.now?date} -->
 <!-- 这里的namespace名字必须为执行该sql的dao地址 -->
-<mapper namespace="${classPackage}.dao.${iDaoName}">
+<mapper namespace="${classPackage}.mapper.${daoName}">
 	<resultMap  id="${classNameWithoutEntity}ResultMap" type="${classPackage}.entity.${className}">
 <#list properties as pro>
 		<!-- ${pro.proDescription} -->
@@ -21,7 +21,7 @@
     </sql>
     <sql id="${classNameWithoutEntity}_Where_Clause" >
 <#list properties as pro>
-        <if test="${pro.proName} != null" >
+        <if test="${pro.proName} != null and ${pro.proName} != '' " >
             and ${pro.proColumnName}=${r'#{'}${pro.proName}}
         </if>
 </#list>
@@ -60,14 +60,14 @@
         insert into ${prefixTableDbName}
         <trim prefix="(" suffix=")" suffixOverrides="," >
         <#list properties as pro>
-            <if test="${pro.proName} != null" >
+            <if test="${pro.proName} != null and ${pro.proName} != '' " >
                 ${pro.proColumnName},
             </if>
         </#list>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
         <#list properties as pro>
-            <if test="${pro.proName} != null" >
+            <if test="${pro.proName} != null and ${pro.proName} != '' " >
                 ${r'#{'}${pro.proName}},
             </if>
         </#list>
@@ -87,8 +87,8 @@
         update ${prefixTableDbName}
         <set >
         <#list properties as pro>
-            <if test="${pro.proName} != null" >
-            ${pro.proColumnName} = ${r'#{'}${pro.proName}},
+            <if test="${pro.proName} != null and ${pro.proName} != '' " >
+                ${pro.proColumnName} = ${r'#{'}${pro.proName}},
             </if>
         </#list>
         </set>

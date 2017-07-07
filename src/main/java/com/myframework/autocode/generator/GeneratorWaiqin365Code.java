@@ -78,10 +78,10 @@ public class GeneratorWaiqin365Code {
             File pathFile = new File(basePath + tableInfo.getModuleName() +"/pojo/" + classInfo.getClassName() + ".java");
             CodeGeneratorUtils.outFile(pathFile,"waiqin365/PojoTemplate",dataMap);
             // mapper生成
-            pathFile = new File(basePath + tableInfo.getModuleName() +"/mapper/" + classInfo.getClassName() + ".java");
+            pathFile = new File(basePath + tableInfo.getModuleName() +"/mapper/" + classInfo.getDaoName()+ ".java");
             CodeGeneratorUtils.outFile(pathFile,"waiqin365/MapperTemplate",dataMap);
-            // mapping生产
-            pathFile = new File(basePath + tableInfo.getModuleName() +"/mapping/" + classInfo.getClassName() + ".java");
+            // mapping生成
+            pathFile = new File(basePath + tableInfo.getModuleName() +"/mapping/" + tableInfo.getTableDbName() + "_mapping.xml");
             CodeGeneratorUtils.outFile(pathFile,"waiqin365/MappingTemplate",dataMap);
         }
     }
