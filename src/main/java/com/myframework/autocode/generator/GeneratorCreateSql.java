@@ -49,7 +49,7 @@ public class GeneratorCreateSql
 		dataMap.put("properties", pros);
 
 		File pathFile = new File(basePath + "CreateSql.sql");
-		CodeGeneratorUtils.outFile(pathFile,"CreateSqlGeneratorTemplate",dataMap);
+		CodeGeneratorUtils.outFile(pathFile,"sql/mysql/CreateSqlTemplate",dataMap);
 	}
 
 }
