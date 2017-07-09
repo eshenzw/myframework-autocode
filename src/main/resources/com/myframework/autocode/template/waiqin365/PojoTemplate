@@ -1,8 +1,7 @@
 package ${classPackage}.pojo;
 
-import java.io.Serializable;
 import com.fh.iasp.platform.core.pojo.BasePojo;
-<#assign basePros = ["id","status","creatorId","createTime","modifyierId","modifyTime"]>
+<#assign basePros = ["id"]>
 <#assign hasImportDate=0 />
 <#assign hasImportBigDecimal=0 />
 <#list properties as pro>
@@ -10,7 +9,7 @@ import com.fh.iasp.platform.core.pojo.BasePojo;
 import java.util.Date;
 <#assign hasImportDate=1 />
 </#if>
-<#if !(basePros?seq_contains(pro.proName)) && pro.proType == "BigDecimal" && hasImportDate == 0>
+<#if !(basePros?seq_contains(pro.proName)) && pro.proType == "BigDecimal" && hasImportBigDecimal == 0>
 import java.math.BigDecimal;
 <#assign hasImportBigDecimal=1 />
 </#if>
@@ -20,10 +19,13 @@ import java.math.BigDecimal;
  * Created by zhaowei on ${.now?date}
  */
 public class ${className} extends BasePojo {
-
+    /**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 <#list properties as pro>
 <#if !(basePros?seq_contains(pro.proName))>
-    /*
+    /**
      * ${pro.proDescription}
      */
 	private ${pro.proType} ${pro.proName};

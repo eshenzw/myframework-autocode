@@ -43,13 +43,13 @@ public class Config {
     public static final String DB_NAME = "org.postgresql.Driver";
     public static final String DB_USER = "iorder_master";
     public static final String DB_PASSWORD = "FHuma025";
-    public static final String DB_TABLES = "stdom_order";
+    public static final String DB_TABLES = "esss_car_exchange_pd_activity";
 
     public final static String DAO_TYPE = "2";  //1:原生javaDao  2:接口型dao，mybatis实例化
     public final static String AUTOCODE_PATH = "../template";
     public final static String OUTPUT_PATH = "/out/AutoCodeGenerate/".replaceAll("/",File.separator);
-    public final static String OUTPUT_PACKAGE = "com.zw";
-    public final static String MODULE_NAME = "test";
+    public final static String OUTPUT_PACKAGE = "com.fh.iasp.app.esss";
+    public final static String MODULE_NAME = "mvc";
     public final static String DB_PREFIX = "";
     public final static String DAO_SUFFIX = "Mapper";
     public final static String CLASS_SUFFIX = "";

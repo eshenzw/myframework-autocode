@@ -81,7 +81,7 @@ public class GeneratorWaiqin365Code {
             pathFile = new File(basePath + tableInfo.getModuleName() +"/mapper/" + classInfo.getDaoName()+ ".java");
             CodeGeneratorUtils.outFile(pathFile,"waiqin365/MapperTemplate",dataMap);
             // mapping生成
-            pathFile = new File(basePath + tableInfo.getModuleName() +"/mapping/" + tableInfo.getTableDbName() + "_mapping.xml");
+            pathFile = new File(basePath + tableInfo.getModuleName() +"/mybatis/" + tableInfo.getTableDbName() + "_mapping.xml");
             CodeGeneratorUtils.outFile(pathFile,"waiqin365/MappingTemplate",dataMap);
         }
     }

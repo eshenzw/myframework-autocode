@@ -4,7 +4,7 @@
 <!-- Created by zhaowei on ${.now?date} -->
 <!-- 这里的namespace名字必须为执行该sql的dao地址 -->
 <mapper namespace="${classPackage}.mapper.${daoName}">
-	<resultMap  id="${classNameWithoutEntity}ResultMap" type="${classPackage}.entity.${className}">
+	<resultMap  id="${classNameWithoutEntity}ResultMap" type="${classPackage}.pojo.${className}">
 <#list properties as pro>
 		<!-- ${pro.proDescription} -->
 	<#if pro.proName == 'id'>
@@ -44,7 +44,7 @@
         from ${prefixTableDbName}
         where id = ${r'#{id}'}
     </select>
-    <insert id="add${classNameWithoutEntity}" parameterType="${classPackage}.entity.${className}" >
+    <insert id="insert${classNameWithoutEntity}" parameterType="${classPackage}.pojo.${className}" >
         insert into ${prefixTableDbName} (
         <#list properties as pro>
             ${pro.proColumnName}<#if pro_has_next>,</#if>
@@ -56,7 +56,7 @@
         </#list>
         )
     </insert>
-    <insert id="add${classNameWithoutEntity}Selective" parameterType="${classPackage}.entity.${className}" >
+    <insert id="insert${classNameWithoutEntity}Selective" parameterType="${classPackage}.pojo.${className}" >
         insert into ${prefixTableDbName}
         <trim prefix="(" suffix=")" suffixOverrides="," >
         <#list properties as pro>
@@ -73,7 +73,7 @@
         </#list>
         </trim>
     </insert>
-    <update id="update${classNameWithoutEntity}" parameterType="${classPackage}.entity.${className}" >
+    <update id="update${classNameWithoutEntity}" parameterType="${classPackage}.pojo.${className}" >
         update ${prefixTableDbName}
         set
         <#list properties as pro>
@@ -83,7 +83,7 @@
         </#list>
         where id = ${r'#{id}'}
     </update>
-    <update id="update${classNameWithoutEntity}Selective" parameterType="${classPackage}.entity.${className}" >
+    <update id="update${classNameWithoutEntity}Selective" parameterType="${classPackage}.pojo.${className}" >
         update ${prefixTableDbName}
         <set >
         <#list properties as pro>
@@ -104,7 +104,7 @@
             ${r'#{item}'}
         </foreach>
     </delete>
-    <insert id="batchAdd${classNameWithoutEntity}" parameterType="java.util.List" >
+    <insert id="batchInsert${classNameWithoutEntity}" parameterType="java.util.List" >
         insert into ${prefixTableDbName} (
         <#list properties as pro>
             ${pro.proColumnName}<#if pro_has_next>,</#if>
