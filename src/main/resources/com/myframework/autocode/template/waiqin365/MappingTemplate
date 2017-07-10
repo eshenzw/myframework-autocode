@@ -26,7 +26,7 @@
         </if>
 </#list>
     </sql>
-    <select id="query${classNameWithoutEntity}List" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.util.Map" >
+    <select id="queryList" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.util.Map" >
         select
         <include refid="${classNameWithoutEntity}_Column_List" />
         from ${prefixTableDbName}
@@ -38,13 +38,13 @@
         where 1=1
         <include refid="${classNameWithoutEntity}_Where_Clause" />
     </select>
-    <select id="get${classNameWithoutEntity}ByID" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.lang.Long" >
+    <select id="getByID" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.lang.Long" >
         select
         <include refid="${classNameWithoutEntity}_Column_List" />
         from ${prefixTableDbName}
         where id = ${r'#{id}'}
     </select>
-    <insert id="insert${classNameWithoutEntity}" parameterType="${classPackage}.pojo.${className}" >
+    <insert id="insert" parameterType="${classPackage}.pojo.${className}" >
         insert into ${prefixTableDbName} (
         <#list properties as pro>
             ${pro.proColumnName}<#if pro_has_next>,</#if>
@@ -56,7 +56,7 @@
         </#list>
         )
     </insert>
-    <insert id="insert${classNameWithoutEntity}Selective" parameterType="${classPackage}.pojo.${className}" >
+    <insert id="insertSelective" parameterType="${classPackage}.pojo.${className}" >
         insert into ${prefixTableDbName}
         <trim prefix="(" suffix=")" suffixOverrides="," >
         <#list properties as pro>
@@ -73,7 +73,7 @@
         </#list>
         </trim>
     </insert>
-    <update id="update${classNameWithoutEntity}" parameterType="${classPackage}.pojo.${className}" >
+    <update id="update" parameterType="${classPackage}.pojo.${className}" >
         update ${prefixTableDbName}
         set
         <#list properties as pro>
@@ -83,7 +83,7 @@
         </#list>
         where id = ${r'#{id}'}
     </update>
-    <update id="update${classNameWithoutEntity}Selective" parameterType="${classPackage}.pojo.${className}" >
+    <update id="updateSelective" parameterType="${classPackage}.pojo.${className}" >
         update ${prefixTableDbName}
         <set >
         <#list properties as pro>
@@ -94,17 +94,17 @@
         </set>
         where id = ${r'#{id}'}
     </update>
-    <delete id="del${classNameWithoutEntity}ByID" parameterType="java.lang.Long" >
+    <delete id="delByID" parameterType="java.lang.Long" >
         delete from ${prefixTableDbName}
         where id = ${r'#{id}'}
     </delete>
-    <delete id="batchDel${classNameWithoutEntity}ByIDs" parameterType="java.util.List" >
+    <delete id="batchDelByIDs" parameterType="java.util.List" >
         delete from ${prefixTableDbName} where id in
         <foreach item="item" collection="ids" open="(" separator="," close=")">
             ${r'#{item}'}
         </foreach>
     </delete>
-    <insert id="batchInsert${classNameWithoutEntity}" parameterType="java.util.List" >
+    <insert id="batchInsert" parameterType="java.util.List" >
         insert into ${prefixTableDbName} (
         <#list properties as pro>
             ${pro.proColumnName}<#if pro_has_next>,</#if>
@@ -119,7 +119,7 @@
             )
         </foreach>
     </insert>
-    <update id="batchUpdate${classNameWithoutEntity}" parameterType="java.util.List" >
+    <update id="batchUpdate" parameterType="java.util.List" >
         <foreach collection="list" item="item" index="index" open="" close="" separator=";">
             update ${prefixTableDbName}
             set

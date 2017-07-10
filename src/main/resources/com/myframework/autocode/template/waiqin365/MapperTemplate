@@ -16,7 +16,7 @@ public interface ${daoName} {
      * @param params
      * @return
      */
-    public List<${className}> query${classNameWithoutEntity}List(Map<String, Object> params);
+    public List<${className}> queryList(Map<String, Object> params);
 
     /**
      * 根据参数获取对象列表结果总数
@@ -32,7 +32,7 @@ public interface ${daoName} {
      * @param id
      * @return
      */
-    public ${className} get${classNameWithoutEntity}ByID(Long id);
+    public ${className} getByID(Long id);
 
     /**
      * 根据对象插入*所有字段*到db
@@ -40,7 +40,7 @@ public interface ${daoName} {
      * @param ${classObjectName}
      * @return 插入结果（数量）
      */
-    public int insert${classNameWithoutEntity}(${className} ${classObjectName});
+    public int insert(${className} ${classObjectName});
 
     /**
      * 根据对象有选择性的只插入*字段不为空*到db
@@ -48,7 +48,7 @@ public interface ${daoName} {
      * @param ${classObjectName}
      * @return 插入结果（数量）
      */
-    public int insert${classNameWithoutEntity}Selective(${className} ${classObjectName});
+    public int insertSelective(${className} ${classObjectName});
 
     /**
      * 根据主键ID查询并*更新所有字段*到db
@@ -56,7 +56,7 @@ public interface ${daoName} {
      * @param ${classObjectName}
      * @return 更新结果（数量）
      */
-    public int update${classNameWithoutEntity}(${className} ${classObjectName});
+    public int update(${className} ${classObjectName});
 
     /**
      * 根据主键ID查询并有选择性的只更新*字段不为空*到db
@@ -64,7 +64,7 @@ public interface ${daoName} {
      * @param ${classObjectName}
      * @return 更新结果（数量）
      */
-    public int update${classNameWithoutEntity}Selective(${className} ${classObjectName});
+    public int updateSelective(${className} ${classObjectName});
 
     /**
      * 根据主键ID查询并删除对象
@@ -72,7 +72,7 @@ public interface ${daoName} {
      * @param id
      * @return 删除结果（数量）
      */
-    public int del${classNameWithoutEntity}ByID(Long id);
+    public int delByID(Long id);
 
     /**
      * 根据主键ID查询并删除对象
@@ -81,7 +81,7 @@ public interface ${daoName} {
      * @param ids
      * @return 删除结果（数量）
      */
-    public int batchDel${classNameWithoutEntity}ByIDs(Long[] ids);
+    public int batchDelByIDs(Long[] ids);
 
     /**
      * 根据对象批量插入*所有字段*到db
@@ -90,7 +90,7 @@ public interface ${daoName} {
      * @return 插入结果（数量）
      * @deprecated 已经被删除的方法
      */
-    public int batchInsert${classNameWithoutEntity}(List<${className}> list);
+    public int batchInsert(List<${className}> list);
 
     /**
      * 根据对象批量更新*所有字段*到db
@@ -99,5 +99,5 @@ public interface ${daoName} {
      * @return 更新结果（数量）
      * @deprecated 已经被删除的方法
      */
-    public int batchUpdate${classNameWithoutEntity}(List<${className}> list);
+    public int batchUpdate(List<${className}> list);
 }
