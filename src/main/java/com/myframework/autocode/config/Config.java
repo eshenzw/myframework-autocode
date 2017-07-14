@@ -11,7 +11,7 @@ public class Config {
      * 数据定义xls文件路径
      * GENERATE_TYPE 为1时用到
      */
-    public final static String DB_DEFINE_FILE = "/doc/数据表设计.xlsx".replaceAll("/", File.separator);
+    public final static String DB_DEFINE_FILE = "/doc/数据表设计.xlsx".replaceAll("/", File.pathSeparator);
     /**
      * 数据库配置
      * GENERATE_TYPE 为2时用到
@@ -47,7 +47,7 @@ public class Config {
 
     public final static String DAO_TYPE = "2";  //1:原生javaDao  2:接口型dao，mybatis实例化
     public final static String AUTOCODE_PATH = "../template";
-    public final static String OUTPUT_PATH = "/out/AutoCodeGenerate/".replaceAll("/",File.separator);
+    public final static String OUTPUT_PATH = "/out/AutoCodeGenerate/".replaceAll("/",File.pathSeparator);
     public final static String OUTPUT_PACKAGE = "com.fh.iasp.app.esss";
     public final static String MODULE_NAME = "mvc";
     public final static String DB_PREFIX = "";
