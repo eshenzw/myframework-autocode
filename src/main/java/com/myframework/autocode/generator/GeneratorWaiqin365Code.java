@@ -19,11 +19,11 @@ import java.util.Map;
  * Created by zw on 2017/7/7.
  */
 public class GeneratorWaiqin365Code {
-    public static void main(String[] args) throws IOException, TemplateException {
+
+    public static void autocode() throws IOException, TemplateException {
         List<TableInfo> tableInfoList = CodeGeneratorUtils.parseTable();
         List<ClassInfo> classInfoList = new ArrayList<ClassInfo>();
-        for (TableInfo tableInfo : tableInfoList)
-        {
+        for (TableInfo tableInfo : tableInfoList) {
             ClassInfo classInfo = new ClassInfo(tableInfo);
             classInfoList.add(classInfo);
         }
@@ -75,36 +75,34 @@ public class GeneratorWaiqin365Code {
             dataMap.put("properties", pros);
 
             // Pojo生成
-            File pathFile = new File(basePath + tableInfo.getModuleName() +"/pojo/" + classInfo.getClassName() + ".java");
-            CodeGeneratorUtils.outFile(pathFile,"waiqin365/PojoTemplate",dataMap);
+            File pathFile = new File(basePath + tableInfo.getModuleName() + "/pojo/" + classInfo.getClassName() + ".java");
+            CodeGeneratorUtils.outFile(pathFile, "waiqin365/PojoTemplate", dataMap);
             // mapper生成
-            pathFile = new File(basePath + tableInfo.getModuleName() +"/mapper/" + classInfo.getDaoName()+ ".java");
-            CodeGeneratorUtils.outFile(pathFile,"waiqin365/MapperTemplate",dataMap);
+            pathFile = new File(basePath + tableInfo.getModuleName() + "/mapper/" + classInfo.getDaoName() + ".java");
+            CodeGeneratorUtils.outFile(pathFile, "waiqin365/MapperTemplate", dataMap);
             // mapping生成
-            pathFile = new File(basePath + tableInfo.getModuleName() +"/mybatis/" + tableInfo.getTableDbName() + "_mapping.xml");
-            CodeGeneratorUtils.outFile(pathFile,"waiqin365/MappingTemplate",dataMap);
+            pathFile = new File(basePath + tableInfo.getModuleName() + "/mybatis/" + tableInfo.getTableDbName() + "_mapping.xml");
+            CodeGeneratorUtils.outFile(pathFile, "waiqin365/MappingTemplate", dataMap);
         }
     }
 
+    public static void main(String[] args) throws IOException, TemplateException {
+        autocode();
+    }
 
-    private static void clearBasePathFiles(String basePath)
-    {
+
+    private static void clearBasePathFiles(String basePath) {
         File dir = new File(basePath);
         dir.mkdirs();
         clearBasePathFiles(dir);
     }
 
-    private static void clearBasePathFiles(File file)
-    {
-        if (file.isDirectory())
-        {
-            for (File child : file.listFiles())
-            {
+    private static void clearBasePathFiles(File file) {
+        if (file.isDirectory()) {
+            for (File child : file.listFiles()) {
                 clearBasePathFiles(child);
             }
-        }
-        else
-        {
+        } else {
             file.delete();
         }
     }
