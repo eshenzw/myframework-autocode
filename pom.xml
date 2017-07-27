@@ -50,9 +50,9 @@
     </dependency>
     <!--  导入Postgresql数据库jar包 -->
     <dependency>
-      <groupId>org.postgresql</groupId>
+      <groupId>postgresql</groupId>
       <artifactId>postgresql</artifactId>
-      <version>42.0.0</version>
+      <version>9.1-901-1.jdbc4</version>
     </dependency>
     <!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
     <dependency>
