@@ -6,12 +6,13 @@ import java.io.File;
  * Created by zw on 2017/7/6.
  */
 public class Config {
+    public static final String FILE_SEPARATOR = System.getProperty("file.separator");
     public final static String GENERATE_TYPE = "2"; //1:数据库定义xls 2:直接读数据库
     /**
      * 数据定义xls文件路径
      * GENERATE_TYPE 为1时用到
      */
-    public final static String DB_DEFINE_FILE = "/doc/数据表设计.xlsx".replaceAll("/", File.pathSeparator);
+    public final static String DB_DEFINE_FILE = "/doc/数据表设计.xlsx".replace("/", FILE_SEPARATOR);
     /**
      * 数据库配置
      * GENERATE_TYPE 为2时用到
@@ -43,13 +44,13 @@ public class Config {
     public static final String DB_NAME = "org.postgresql.Driver";
     public static final String DB_USER = "iorder_master";
     public static final String DB_PASSWORD = "FHuma025";
-    public static final String DB_TABLES = "esss_car_exchange_pd_activity";
+    public static final String DB_TABLES = "ic_lower_tenant_daily_sales";
 
     public final static String DAO_TYPE = "2";  //1:原生javaDao  2:接口型dao，mybatis实例化
     public final static String AUTOCODE_PATH = "../template";
-    public final static String OUTPUT_PATH = "/out/AutoCodeGenerate/".replaceAll("/",File.pathSeparator);
-    public final static String OUTPUT_PACKAGE = "com.fh.iasp.app.esss";
-    public final static String MODULE_NAME = "mvc";
+    public final static String OUTPUT_PATH = "/out/AutoCodeGenerate/".replace("/", FILE_SEPARATOR);
+    public final static String OUTPUT_PACKAGE = "com.fh.iasp.app.ic";
+    public final static String MODULE_NAME = "web";
     public final static String DB_PREFIX = "";
     public final static String DAO_SUFFIX = "Mapper";
     public final static String CLASS_SUFFIX = "";
