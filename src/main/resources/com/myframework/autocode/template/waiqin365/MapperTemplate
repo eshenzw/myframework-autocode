@@ -3,6 +3,7 @@ package ${classPackage}.mapper;
 import java.util.List;
 import java.util.Map;
 import java.lang.Long;
+import org.apache.ibatis.annotations.Param;
 import ${classPackage}.pojo.${className};
 
 /**
@@ -32,7 +33,7 @@ public interface ${daoName} {
      * @param id
      * @return
      */
-    public ${className} getByID(Long id);
+    public ${className} getByID(@Param("id") Long id);
 
     /**
      * 根据对象插入*所有字段*到db
@@ -72,7 +73,7 @@ public interface ${daoName} {
      * @param id
      * @return 删除结果（数量）
      */
-    public int delByID(Long id);
+    public int delByID(@Param("id") Long id);
 
     /**
      * 根据主键ID查询并删除对象
@@ -81,7 +82,7 @@ public interface ${daoName} {
      * @param ids
      * @return 删除结果（数量）
      */
-    public int batchDelByIDs(Long[] ids);
+    public int batchDelByIDs(@Param("ids") Long[] ids);
 
     /**
      * 根据对象批量插入*所有字段*到db
@@ -90,7 +91,7 @@ public interface ${daoName} {
      * @return 插入结果（数量）
      * @deprecated 已经被删除的方法
      */
-    public int batchInsert(List<${className}> list);
+    public int batchInsert(@Param("list") List<${className}> list);
 
     /**
      * 根据对象批量更新*所有字段*到db
@@ -99,5 +100,5 @@ public interface ${daoName} {
      * @return 更新结果（数量）
      * @deprecated 已经被删除的方法
      */
-    public int batchUpdate(List<${className}> list);
+    public int batchUpdate(@Param("list") List<${className}> list);
 }

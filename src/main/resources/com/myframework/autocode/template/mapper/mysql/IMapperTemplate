@@ -98,7 +98,7 @@
         delete from ${prefixTableDbName}
         where id = ${r'#{id}'}
     </delete>
-    <delete id="batchDel${classNameWithoutEntity}ByIDs" parameterType="java.util.List" >
+    <delete id="batchDel${classNameWithoutEntity}ByIDs">
         delete from ${prefixTableDbName} where id in
         <foreach item="item" collection="ids" open="(" separator="," close=")">
             ${r'#{item}'}

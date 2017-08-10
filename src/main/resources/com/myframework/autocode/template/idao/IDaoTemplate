@@ -2,6 +2,7 @@ package ${classPackage}.dao;
 
 import java.util.List;
 import java.util.Map;
+import org.apache.ibatis.annotations.Param;
 import ${classPackage}.entity.${className};
 
 /**
@@ -31,7 +32,7 @@ public interface ${iDaoName} {
      * @param id
      * @return
      */
-    public ${className} get${classNameWithoutEntity}ByID(Serializable id);
+    public ${className} get${classNameWithoutEntity}ByID(@Param("id") Serializable id);
 
     /**
      * 根据对象插入*所有字段*到db
@@ -71,7 +72,7 @@ public interface ${iDaoName} {
      * @param id
      * @return 删除结果（数量）
      */
-    public int del${classNameWithoutEntity}ByID(Serializable id);
+    public int del${classNameWithoutEntity}ByID(@Param("id") Serializable id);
 
     /**
      * 根据主键ID查询并删除对象
@@ -80,7 +81,7 @@ public interface ${iDaoName} {
      * @param ids
      * @return 删除结果（数量）
      */
-    public int batchDel${classNameWithoutEntity}ByIDs(Serializable[] ids);
+    public int batchDel${classNameWithoutEntity}ByIDs(@Param("ids") Serializable[] ids);
 
     /**
      * 根据对象批量插入*所有字段*到db
@@ -89,7 +90,7 @@ public interface ${iDaoName} {
      * @return 插入结果（数量）
      * @deprecated 已经被删除的方法
      */
-    public int batchAdd${classNameWithoutEntity}(List<${className}> list);
+    public int batchAdd${classNameWithoutEntity}(@Param("list") List<${className}> list);
 
     /**
      * 根据对象批量更新*所有字段*到db
@@ -98,5 +99,5 @@ public interface ${iDaoName} {
      * @return 更新结果（数量）
      * @deprecated 已经被删除的方法
      */
-    public int batchUpdate${classNameWithoutEntity}(List<${className}> list);
+    public int batchUpdate${classNameWithoutEntity}(@Param("list") List<${className}> list);
 }
