@@ -25,7 +25,7 @@
         </if>
 </#list>
     </sql>
-    <select id="queryList" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.util.Map" >
+    <select id="list" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.util.Map" >
         select
         <include refid="${classNameWithoutEntity}_Column_List" />
         from ${prefixTableDbName}
@@ -37,13 +37,13 @@
         where 1=1
         <include refid="${classNameWithoutEntity}_Where_Clause" />
     </select>
-    <select id="getByID" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.lang.Long" >
+    <select id="get" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.lang.Long" >
         select
         <include refid="${classNameWithoutEntity}_Column_List" />
         from ${prefixTableDbName}
         where id = ${r'#{id}'}
     </select>
-    <insert id="add" parameterType="${classPackage}.entity.${className}" >
+    <insert id="insert" parameterType="${classPackage}.entity.${className}" >
         insert into ${prefixTableDbName} (
         <#list properties as pro>
             ${pro.proColumnName}<#if pro_has_next>,</#if>
@@ -55,7 +55,7 @@
         </#list>
         )
     </insert>
-    <insert id="addSelective" parameterType="${classPackage}.entity.${className}" >
+    <insert id="insertSelective" parameterType="${classPackage}.entity.${className}" >
         insert into ${prefixTableDbName}
         <trim prefix="(" suffix=")" suffixOverrides="," >
         <#list properties as pro>
@@ -72,7 +72,7 @@
         </#list>
         </trim>
     </insert>
-    <update id="updateByID" parameterType="${classPackage}.entity.${className}" >
+    <update id="update" parameterType="${classPackage}.entity.${className}" >
         update ${prefixTableDbName}
         set
         <#list properties as pro>
@@ -82,7 +82,7 @@
         </#list>
         where id = ${r'#{id}'}
     </update>
-    <update id="updateByIDSelective" parameterType="${classPackage}.entity.${className}" >
+    <update id="updateSelective" parameterType="${classPackage}.entity.${className}" >
         update ${prefixTableDbName}
         <set >
         <#list properties as pro>
@@ -93,7 +93,7 @@
         </set>
         where id = ${r'#{id}'}
     </update>
-    <delete id="delByID" parameterType="java.lang.Long" >
+    <delete id="delete" parameterType="java.lang.Long" >
         delete from ${prefixTableDbName}
         where id = ${r'#{id}'}
     </delete>

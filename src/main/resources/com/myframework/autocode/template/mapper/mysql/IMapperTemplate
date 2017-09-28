@@ -26,7 +26,7 @@
         </if>
 </#list>
     </sql>
-    <select id="query${classNameWithoutEntity}List" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.util.Map" >
+    <select id="list${classNameWithoutEntity}" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.util.Map" >
         select
         <include refid="${classNameWithoutEntity}_Column_List" />
         from ${prefixTableDbName}
@@ -38,13 +38,13 @@
         where 1=1
         <include refid="${classNameWithoutEntity}_Where_Clause" />
     </select>
-    <select id="get${classNameWithoutEntity}ByID" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.lang.Long" >
+    <select id="get${classNameWithoutEntity}" resultMap="${classNameWithoutEntity}ResultMap" parameterType="java.lang.Long" >
         select
         <include refid="${classNameWithoutEntity}_Column_List" />
         from ${prefixTableDbName}
         where id = ${r'#{id}'}
     </select>
-    <insert id="add${classNameWithoutEntity}" parameterType="${classPackage}.entity.${className}" >
+    <insert id="insert${classNameWithoutEntity}" parameterType="${classPackage}.entity.${className}" >
         insert into ${prefixTableDbName} (
         <#list properties as pro>
             ${pro.proColumnName}<#if pro_has_next>,</#if>
@@ -56,7 +56,7 @@
         </#list>
         )
     </insert>
-    <insert id="add${classNameWithoutEntity}Selective" parameterType="${classPackage}.entity.${className}" >
+    <insert id="insert${classNameWithoutEntity}" parameterType="${classPackage}.entity.${className}" >
         insert into ${prefixTableDbName}
         <trim prefix="(" suffix=")" suffixOverrides="," >
         <#list properties as pro>
@@ -94,17 +94,17 @@
         </set>
         where id = ${r'#{id}'}
     </update>
-    <delete id="del${classNameWithoutEntity}ByID" parameterType="java.lang.Long" >
+    <delete id="delete${classNameWithoutEntity}" parameterType="java.lang.Long" >
         delete from ${prefixTableDbName}
         where id = ${r'#{id}'}
     </delete>
-    <delete id="batchDel${classNameWithoutEntity}ByIDs">
+    <delete id="batchDelete${classNameWithoutEntity}">
         delete from ${prefixTableDbName} where id in
         <foreach item="item" collection="ids" open="(" separator="," close=")">
             ${r'#{item}'}
         </foreach>
     </delete>
-    <insert id="batchAdd${classNameWithoutEntity}" parameterType="java.util.List" >
+    <insert id="batchInsert${classNameWithoutEntity}" parameterType="java.util.List" >
         insert into ${prefixTableDbName} (
         <#list properties as pro>
             ${pro.proColumnName}<#if pro_has_next>,</#if>

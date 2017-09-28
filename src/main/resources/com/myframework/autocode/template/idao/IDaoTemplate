@@ -16,7 +16,7 @@ public interface ${iDaoName} {
      * @param params
      * @return
      */
-    public List<${className}> query${classNameWithoutEntity}List(Map<String, Object> params);
+    public List<${className}> list${classNameWithoutEntity}(Map<String, Object> params);
 
     /**
      * 根据参数获取对象列表结果总数
@@ -32,7 +32,7 @@ public interface ${iDaoName} {
      * @param id
      * @return
      */
-    public ${className} get${classNameWithoutEntity}ByID(@Param("id") Serializable id);
+    public ${className} get${classNameWithoutEntity}(@Param("id") Serializable id);
 
     /**
      * 根据对象插入*所有字段*到db
@@ -40,7 +40,7 @@ public interface ${iDaoName} {
      * @param t
      * @return 插入结果（数量）
      */
-    public int add${classNameWithoutEntity}(${className} ${classObjectName});
+    public int insert${classNameWithoutEntity}(${className} ${classObjectName});
 
     /**
      * 根据对象有选择性的只插入*字段不为空*到db
@@ -48,7 +48,7 @@ public interface ${iDaoName} {
      * @param t  对象
      * @return 插入结果（数量）
      */
-    public int add${classNameWithoutEntity}Selective(${className} ${classObjectName});
+    public int insert${classNameWithoutEntity}Selective(${className} ${classObjectName});
 
     /**
      * 根据主键ID查询并*更新所有字段*到db
@@ -72,7 +72,7 @@ public interface ${iDaoName} {
      * @param id
      * @return 删除结果（数量）
      */
-    public int del${classNameWithoutEntity}ByID(@Param("id") Serializable id);
+    public int delete${classNameWithoutEntity}(@Param("id") Serializable id);
 
     /**
      * 根据主键ID查询并删除对象
@@ -81,7 +81,7 @@ public interface ${iDaoName} {
      * @param ids
      * @return 删除结果（数量）
      */
-    public int batchDel${classNameWithoutEntity}ByIDs(@Param("ids") Serializable[] ids);
+    public int batchDelete${classNameWithoutEntity}(@Param("ids") Serializable[] ids);
 
     /**
      * 根据对象批量插入*所有字段*到db
@@ -90,7 +90,7 @@ public interface ${iDaoName} {
      * @return 插入结果（数量）
      * @deprecated 已经被删除的方法
      */
-    public int batchAdd${classNameWithoutEntity}(@Param("list") List<${className}> list);
+    public int batchInsert${classNameWithoutEntity}(@Param("list") List<${className}> list);
 
     /**
      * 根据对象批量更新*所有字段*到db

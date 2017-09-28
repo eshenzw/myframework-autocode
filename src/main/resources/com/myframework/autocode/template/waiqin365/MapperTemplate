@@ -17,7 +17,7 @@ public interface ${daoName} {
      * @param params
      * @return
      */
-    public List<${className}> queryList(Map<String, Object> params);
+    public List<${className}> list(Map<String, Object> params);
 
     /**
      * 根据参数获取对象列表结果总数
@@ -33,7 +33,7 @@ public interface ${daoName} {
      * @param id
      * @return
      */
-    public ${className} getByID(@Param("id") Long id);
+    public ${className} get(@Param("id") Long id);
 
     /**
      * 根据对象插入*所有字段*到db
@@ -73,7 +73,7 @@ public interface ${daoName} {
      * @param id
      * @return 删除结果（数量）
      */
-    public int delByID(@Param("id") Long id);
+    public int delete(@Param("id") Long id);
 
     /**
      * 根据主键ID查询并删除对象
@@ -82,7 +82,7 @@ public interface ${daoName} {
      * @param ids
      * @return 删除结果（数量）
      */
-    public int batchDelByIDs(@Param("ids") Long[] ids);
+    public int batchDelete(@Param("ids") Long[] ids);
 
     /**
      * 根据对象批量插入*所有字段*到db
