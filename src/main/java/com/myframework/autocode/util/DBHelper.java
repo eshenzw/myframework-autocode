@@ -24,7 +24,7 @@ public class DBHelper {
     public DBHelper(String sql)
     {
         this.url = Config.DB_URL;
-        this.name = Config.DB_NAME;
+        this.name = Config.DB_DRIVER;
         this.user = Config.DB_USER;
         this.password = Config.DB_PASSWORD;
         try

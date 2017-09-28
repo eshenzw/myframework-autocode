@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<autocode>
+    <!--1:数据库定义xls   2:直接读数据库-->
+    <generate-type>2</generate-type>
+    <!--数据库定义文件地址 -->
+    <db-define-file>/doc/数据表设计.xlsx</db-define-file>
+    <!--数据库 MYSQL(1), SQLSERVER(2), ORACLE(3), POSTGRESQL(3); -->
+    <db-type>postgresql</db-type>
+    <!--数据库驱动 -->
+    <db-driver>org.postgresql.Driver</db-driver>
+    <!--数据库连接地址 -->
+    <db-url>jdbc:postgresql://172.31.3.206:5432/u8958085892090750662?useUnicode=true&amp;characterEncoding=utf8</db-url>
+    <!--数据库用户名 -->
+    <db-user>iorder_master</db-user>
+    <!--数据库密码 -->
+    <db-password>FHuma025</db-password>
+    <!--数据库表 -->
+    <db-tables>ic_lower_tenant_daily_sales</db-tables>
+
+    <!-- 1:原生javaDao  2:接口型dao，mybatis实例化 -->
+    <dao-type>2</dao-type>
+    <output-path>/out/AutoCodeGenerate/</output-path>
+    <output-package>com.autocode</output-package>
+    <module-name>test</module-name>
+    <db-prefix></db-prefix>
+    <dao-suffix>Mapper</dao-suffix>
+    <entity-suffix>Entity</entity-suffix>
+</autocode>
