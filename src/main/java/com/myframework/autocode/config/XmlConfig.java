@@ -4,6 +4,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.jdom.Element;
 import org.jdom.input.SAXBuilder;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 
 /**
@@ -15,9 +17,19 @@ public class XmlConfig {
 
     static {
         try {
-            rootElement = getRootElement(XmlConfig.class.getClassLoader().getResourceAsStream("autocode.xml"));
+            if(rootElement == null){
+                rootElement = getRootElement(XmlConfig.class.getClassLoader().getResourceAsStream("autocode.xml"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void loadXml(String filepath){
+        try {
+            rootElement = getRootElement(new FileInputStream(new File(filepath)));
+        } catch (Exception e) {
+            System.out.println("找不到配置文件");
         }
     }
 

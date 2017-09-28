@@ -40,7 +40,8 @@ public class CodeGeneratorUtils {
 
     public static void outFile(File file, String template, Map dataMap) throws IOException, TemplateException {
         Configuration cfg = new Configuration();
-        cfg.setClassForTemplateLoading(GeneratorCreateSql.class, Config.TEMPLATE_PATH);
+        String tpmlPath = new String("/com/myframework/autocode/template/").replaceAll("/", File.separator);
+        cfg.setClassForTemplateLoading(CodeGeneratorUtils.class.getClassLoader().getClass(), tpmlPath);
         file.getParentFile().mkdirs();
         FileOutputStream fos = new FileOutputStream(file);
         Writer writer = new OutputStreamWriter(fos, "UTF-8");

@@ -1,5 +1,6 @@
 package com.myframework.autocode;
 
+import com.myframework.autocode.config.XmlConfig;
 import com.myframework.autocode.generator.GeneratorJava;
 import freemarker.template.TemplateException;
 
@@ -11,9 +12,7 @@ import java.io.IOException;
 public class App {
     /**
      * 说明：
-     * 配置  com.myframework.autocode.config.Config类   修改 DB_TABLES
-     * OUTPUT_PACKAGE
-     * MODULE_NAME
+     * 配置  resources 下  autocode.xml文件
      * 然后运行  com.myframework.autocode.generator.GeneratorJava
      * 的main方法 就可以生成 mybatis相关的类文件
      *
@@ -42,6 +41,18 @@ public class App {
                 "//      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^        //  \n" +
                 "//         佛祖保佑       永无BUG     永不修改                  //  \n" +
                 "////////////////////////////////////////////////////////////////////");
-        GeneratorJava.autocode();
+        for(int i=0;i<args.length;i++){
+            if("--configfile".equals(args[i])){
+                if(i<args.length-1 && args[i+1] != null && args[i+1] != ""){
+                    System.out.println("加载配置文件："+args[1]);
+                    XmlConfig.loadXml(args[1]);
+                    GeneratorJava.autocode();
+                }else{
+                    System.out.println("加载配置文件失败. try with --help");
+                }
+            }else if("--help".equals(args[i])){
+                System.out.println("usage with --configfile autocode.xml");
+            }
+        }
     }
 }

@@ -27,7 +27,6 @@ public class Config {
      * 生产文件配置
      */
     public final static String DAO_TYPE = XmlConfig.get("db-type");  //1:原生javaDao  2:接口型dao，mybatis实例化
-    public final static String TEMPLATE_PATH = "../template";
     public final static String OUTPUT_PATH = XmlConfig.get("output-path").replaceAll("/",File.separator);
     public final static String OUTPUT_PACKAGE = XmlConfig.get("output-package");
     public final static String MODULE_NAME = XmlConfig.get("module-name");
