@@ -56,7 +56,7 @@
         </#list>
         )
     </insert>
-    <insert id="insert${classNameWithoutEntity}" parameterType="${classPackage}.entity.${className}" >
+    <insert id="insert${classNameWithoutEntity}Selective" parameterType="${classPackage}.entity.${className}" >
         insert into ${prefixTableDbName}
         <trim prefix="(" suffix=")" suffixOverrides="," >
         <#list properties as pro>
